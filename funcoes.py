@@ -36,6 +36,17 @@ def remover_dado(dadosRolados, dadosEstoque, dadoRemover):
 
     return [novosRolados, novoEstoque]
 
+def calcula_pontos_regra_simples(listaDados):
+    pontuacao = {}
+    for i in [1, 2, 3, 4, 5, 6]:
+        pontuacao[i] = 0
+    # cria o dicionário com todos os valores das chaves em 0
+
+    for i in listaDados:
+        pontuacao[i] += i
+    # adiciona os valores dos dados no diconário
+    return pontuacao
+
 
 
     
