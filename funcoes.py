@@ -116,6 +116,25 @@ def calcula_pontos_quadra(listaDados):
     return 0
     # confere se ha alguma repeticao maior ou igual a 4 e retorna o resultado
 
+def calcula_pontos_quina(listaDados):
+    quantidade = {}
+    for i in [1, 2, 3, 4, 5, 6]:
+        quantidade[i] = 0
+    # cria o dicionário com todos os valores das chaves em 0
+
+    for i in listaDados:
+        quantidade[i] += 1
+    # adiciona a quantidade de repetiçoes que cada dado teve e faz a soma
+
+    for i, n in quantidade.items():
+        if n >= 5:
+            return 50
+    return 0
+    # confere se ha alguma repeticao maior ou igual a 4 e retorna o resultado
+
+
+
+
     
 
 
