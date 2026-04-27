@@ -53,6 +53,21 @@ def calcula_pontos_soma(listaDados):
         soma += i
     return soma
 
+def calcula_pontos_sequencia_baixa(listaDados):
+    if 1 in listaDados and 2 in listaDados and 3 in listaDados and 4 in listaDados:
+        return 15
+    elif 2 in listaDados and 3 in listaDados and 4 in listaDados and 5 in listaDados:
+        return 15
+    elif 3 in listaDados and 4 in listaDados and 5 in listaDados and 6 in listaDados:
+        return 15
+    
+    return 0
+
+
+
+
+
+
 
 
 
