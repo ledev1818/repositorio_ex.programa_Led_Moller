@@ -71,6 +71,34 @@ def calcula_pontos_sequencia_alta(listaDados):
 
     return 0
 
+def calcula_pontos_full_house(listaDados):
+    lista1 = []
+    lista2 = []
+    # cria duas listas de validação para juntar o par e a trinca
+    soma = 0
+    for i in listaDados:
+        if lista1 == []:
+            lista1.append(i)
+        elif lista2 == []:
+            lista2.append(i)
+        # adiciona um numero dos dados na lista de validação caso a mesma esteja vazia
+
+        elif i == lista1[0]:
+            lista1.append(i)
+        elif i == lista2[0]:
+            lista2.append(i)
+        # adiciona um numero dos dados se este for igual ao dos que já estao na lista
+        soma += i
+
+    if len(lista1) == 3 and len(lista2) == 2:
+        return soma
+    elif len(lista2) == 3 and len(lista1) == 2:
+        return soma
+    else:
+        return 0
+    # confere se as listas possuem uma trinca e uma dupla e retorna o resultado
+
+
 
 
 
