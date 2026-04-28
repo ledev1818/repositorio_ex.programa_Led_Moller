@@ -45,66 +45,96 @@ digiteCombinacao = "Digite a combinação desejada:"
 
 listaDados = rolar_dados(5)
 Estoque = []
-
-print(imprime_cartela(cartela))
-print(listaDados)
-print(Estoque)
-print(digite1)
 reroladas = 0
+rodada = 0
 
-while -1 in cartela['regra_simples'] and cartela['regra_avancada']:
-    print(listaDados)
-    print(Estoque)
+imprime_cartela(cartela)
+
+while rodada < 12:
+    print(f'Dados rolados: {listaDados}')
+    print(f'Dados guardados: {Estoque}')
     print(digite1)
-    acao = int(input())
-    if acao not in [0, 1, 2, 3, 4]: 
+    acao = input('')
+    if acao not in ['0', '1', '2', '3', '4']: 
         print("Opção inválida. Tente novamente.")
 
-    elif acao == 1: # segue codigo para a guardar o dado
+    elif acao == '1': # segue codigo para a guardar o dado
         print(digiteGuardar)
-        dadoGuardar = int(input())
+        dadoGuardar = int(input(''))
         lista = guardar_dado(listaDados, Estoque, dadoGuardar)
         listaDados = lista[0]
         Estoque = lista[1]
 
-    elif acao == 2: # segue o codigo para remover um dado do estoque
+    elif acao == '2': # segue o codigo para remover um dado do estoque
         print(digiteRemover)
-        dadoRemover = int(input())
+        dadoRemover = int(input(''))
         lista = remover_dado(listaDados, Estoque, dadoRemover)
         listaDados = lista[0]
         Estoque = lista[1]
 
-    elif acao == 3: # segue o codigo para rerolagem (após a ação 0, as reroladas devem ser zeradas)
+    elif acao == '3': # segue o codigo para rerolagem (após a ação 0, as reroladas devem ser zeradas)
         if reroladas == 2:
             print("Você já usou todas as rerrolagens.")
         else:
             listaDados = rolar_dados(len(listaDados))
+            reroladas += 1
 
-    elif acao == 4: 
-        print(imprime_cartela(cartela))
+    elif acao == '4': 
+        imprime_cartela(cartela)
 
-    elif acao == 0:
-        terminada = False
-        listaDados += Estoque
+    elif acao == '0':
+        terminada = False # variavel para determinar se a pontuacao foi computada (combinacao valida nao utilizada)
+        listaDados += Estoque # junta todos os dados para pontuar
+
         while terminada == False:
             print(digiteCombinacao)
-            combinacao = input()
+            combinacao = input('')
             if combinacao in ['1','2','3','4','5','6']:
                 combinacao = int(combinacao)
 
             if combinacao not in combinacoes:
                 print("Combinação inválida. Tente novamente.")
-            elif combinacao in combinacoes[0:6]:
-                if cartela['regra_simples'][combinacao] == -1:
-                    cartela = faz_jogada(listaDados, combinacao, cartela)
-                else:
-                    print("Essa combinação já foi utilizada.")
+            else:
+                if combinacao in combinacoes[0:6]:
+                    if cartela['regra_simples'][combinacao] == -1:
+                        combinacao = str(combinacao)
+                        cartela = faz_jogada(listaDados, combinacao, cartela)
+                        terminada = True
+                        rodada += 1
+                    else:
+                        print("Essa combinação já foi utilizada.")
 
-            elif combinacao in combinacoes[6:]:
-                if cartela['regra_avancada'][combinacao] == -1:
-                    cartela = faz_jogada(listaDados, combinacao, cartela)
-                else:
-                    print("Essa combinação já foi utilizada.")
+                elif combinacao in combinacoes[6:]:
+                    if cartela['regra_avancada'][combinacao] == -1:
+                        combinacao = str(combinacao)
+                        cartela = faz_jogada(listaDados, combinacao, cartela)
+                        terminada = True
+                        rodada += 1
+                    else:
+                        print("Essa combinação já foi utilizada.")
+
+        listaDados = rolar_dados(5)
+        Estoque = []
+        reroladas = 0
+
+imprime_cartela(cartela)
+
+pontosSimples = 0
+pontosAvancado = 0
+bonus = 0
+for i, n in cartela.items():
+    for j, k in n.items():
+        if i == 'regra_simples':
+            pontosSimples += k
+        elif i == 'regra_avancada':
+            pontosAvancado += k
+
+if pontosSimples >= 63:
+    bonus = 35
+
+pontuacaoTotal = pontosAvancado + pontosSimples + bonus
+print(f"Pontuação total: {pontuacaoTotal}")
+
 
 
 
